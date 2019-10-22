@@ -4,12 +4,11 @@
 # In[5]:
 
 
-#https://developer.valvesoftware.com/wiki/Steam_Web_API#Game_interfaces_and_methods
 import requests
 from bs4 import BeautifulSoup as bs
 
 
-# In[6]:
+# In[2]:
 
 
 startID = "76561198330189125" 
@@ -29,7 +28,7 @@ response = requests.get(whole)
 starterBowl = bs(response.content,"lxml")
 
 
-# In[7]:
+# In[3]:
 
 
 
@@ -95,10 +94,11 @@ def friendTree(doneList, bannedPerson):
     
 
 
-# In[11]:
+# In[4]:
 
 
 doneBefore = []
+
 friendList = []
 treeLevel = 0 
 foundBan = False
@@ -106,7 +106,6 @@ rootID = startID
 counter = 0
 pastStart = False
 bannedFriend = ""
-friendsGoneThrough=0
 while foundBan != True:
     
     
@@ -118,21 +117,17 @@ while foundBan != True:
     
     
     friendList = findFriendCodes(rootID)
-    print(friendList)
+    #print(friendList)
     amountOfFriends = len(friendList)
-    friendsGoneThrough+=amountOfFriends
-    
     print("Amount of friends: ",amountOfFriends)
     print("-----------------------------------------------")
     
     for friend in friendList:
         foundBan = isBanned(friend)
         if foundBan == True:
-            print("\n",isBanned(friend), friend, findIDName(friend))
+            print(isBanned(friend), friend)
             bannedFriend = findIDName(friend)
             print(friendTree(doneBefore, bannedFriend))
-            print("Friends it checked: ",friendsGoneThrough)
-            print("It took ",treeLevel, " hops")
             break
         print(isBanned(friend), friend)
         
@@ -155,8 +150,10 @@ while foundBan != True:
     
     
     counter +=1
-
     
+
+
+# In[ ]:
 
 
 # In[ ]:
